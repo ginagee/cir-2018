@@ -90,6 +90,45 @@ def motor(r_speed, l_speed):
 	GPIO.output(LED1,False)#ONLY LED1 ON when navigating
 	GPIO.output(LED2,True)
 
+
+def motor_linear_action_to_rl(action):
+
+	r,l = 0
+
+	if action == 1:
+		r = 80
+		l = 80
+	elif action == 2:
+		r = 50
+		l = 50
+	elif action == 3:
+		r = 80
+		l = 0
+	elif action == 4:
+		r = 80
+		l = 40
+	elif action == 5:
+		r = 80
+		l = 80
+	elif action == 6:
+		r = 40
+		l = 80
+	elif action == 7:
+		r = 0
+		l = 80
+
+	#if action < 2:
+	#	r = 80/action
+	#	l = 80/action
+	#else:
+	#	r = 80 * (1 - mod(action/5))
+	#	l = 80 * (mod(action/5))
+	return r,l
+
+def motor_move (action):							##This is what we call from the real world(?)
+	r,l = motor_linear_action_to_lr(action)
+	motor(r,l)
+
 #This are duplicated...
 
 def ENA_Speed(EA_num):
