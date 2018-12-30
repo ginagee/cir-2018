@@ -19,9 +19,11 @@ from kobuki_msgs.msg import BumperEvent
 
 class RealWorld():
 	def __init__(self):
-		 # initiliaze
-        # dr.Start_Video_capture()
-		rospy.init_node('RealWorld', anonymous=False)
+
+		dr.start_Video_capture()  ### MOdIFIED GB
+		#initiliaze
+
+		# rospy.init_node('RealWorld', anonymous=False)
 
 		#-----------Default Robot State-----------------------
 		self.set_self_state = ModelState()
@@ -217,6 +219,7 @@ class RealWorld():
 		return(cv_img/5.)
 
 	def GetRGBImageObservation(self):
+		return dr.img_processing()   ### MOdIFIED GB
 		# # ros image to cv2 image
 		# try:
 			# cv_img = self.bridge.imgmsg_to_cv2(self.rgb_image, "bgr8")
@@ -231,8 +234,8 @@ class RealWorld():
 		# except Exception as e:
 			# raise e
 		# self.resized_rgb_img.publish(resized_img)
-        ret,cv_resized_img = video_captured.read()
-		return(cv_resized_img)
+        #ret,cv_resized_img = video_captured.read()
+		#return cv_resized_img
 
 	def PublishDepthPrediction(self, depth_img):
 		# cv2 image to ros image and publish
