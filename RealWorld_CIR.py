@@ -304,18 +304,19 @@ class RealWorld():
 		rospy.sleep(0.5)
 
 	def Control(self, action):
-		if action <2:
-			self.self_speed[0] = self.action_table[0]
-		else:
-			self.self_speed[1] = self.action_table[action]
-		move_cmd = Twist()
-		move_cmd.linear.x = self.self_speed[0]/2
-		move_cmd.linear.y = 0.
-		move_cmd.linear.z = 0.
-		move_cmd.angular.x = 0.
-		move_cmd.angular.y = 0.
-		move_cmd.angular.z = self.self_speed[1]/2
-		self.cmd_vel.publish(move_cmd)
+        dr.motor_move(action)
+#		if action <2:
+#			self.self_speed[0] = self.action_table[0]
+#		else:
+#			self.self_speed[1] = self.action_table[action]
+#		move_cmd = Twist()
+#		move_cmd.linear.x = self.self_speed[0]/2
+#		move_cmd.linear.y = 0.
+#		move_cmd.linear.z = 0.
+#		move_cmd.angular.x = 0.
+#		move_cmd.angular.y = 0.
+#		move_cmd.angular.z = self.self_speed[1]/2
+#		self.cmd_vel.publish(move_cmd)
 
 	def shutdown(self):
 		# stop turtlebot
