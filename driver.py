@@ -56,6 +56,7 @@ def	delivery_Light():# all leds blinking fast
 	global LED0
 	global LED1
 	global LED2
+    motor(0, 0)
 	for repeat in range(0,20):
 		GPIO.output(LED0,False) # ON
 		GPIO.output(LED1,False)

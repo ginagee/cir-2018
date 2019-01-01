@@ -17,7 +17,7 @@ from smbus import SMBus
 import cv2
 import numpy as np
 from subprocess import call
-
+import pygame
 
 XRservo = SMBus(1)
 print '....WIFIROBOTS START!!!...'
@@ -56,6 +56,13 @@ IR_L = 27   #小车左侧巡线红外
 IR_M = 22   #小车中间避障红外
 IRF_R = 23  #小车跟随右侧红外
 IRF_L = 24  #小车跟随左侧红外
+
+
+global target
+target = 0   
+global audio_dir
+audio_dir = "./audio_files/"  
+
 global Cruising_Flag
 Cruising_Flag = 0   #//当前循环模式
 global Pre_Cruising_Flag
@@ -170,7 +177,42 @@ def init_light():#流水灯
         GPIO.output(LED0,True)#流水灯LED0
         GPIO.output(LED1,True)#流水灯LED1
         GPIO.output(LED2,True)#流水灯LED2
+        
+        
+##########Speech###########################
+
+def delivery_message():
+    
+    global target
+    
+    switcher = {
+        0: "hello.m4a"
+        1: "hello1.m4a",
+        2: "hello2.m4a",
+        3: "hello3.m4a",
+        4: "hello4.m4a",
+        5: "hello5.m4a",
+        6: "hello6.m4a",
+        7: "hello7.m4a",
+        8: "hello8.m4a",
+        9: "hello9.m4a",
+        10: "hello10.m4a"
+    }
+    print(switcher.get(argument, "Invalid"))
+    play_message(switcher.get(argument, "hello.m4a"))
+
+def play_message(filename):
+
+    pygame.mixer.init()
+    pygame.mixer.music.load(audio_dir + filename)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy() == True:
+        continue
+    
 ##########机器人方向控制###########################
+
+
+
 def Motor_Forward():
     print 'motor forward'
     GPIO.output(ENA,True)
@@ -811,7 +853,8 @@ def Communication_Decode():
         XRservo.XiaoRGEEK_ReSetServo()
     elif buffer[0]=='04':       #开关灯模式 FF040000FF开灯  FF040100FF关灯
         if buffer[1]=='00':
-            Open_Light()
+            #Open_Light()
+            delivery_Light()
         elif buffer[1]=='01':
             Close_Light()
         else:
